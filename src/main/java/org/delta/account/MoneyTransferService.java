@@ -1,5 +1,7 @@
 package org.delta.account;
 
+import java.text.MessageFormat;
+
 public class MoneyTransferService {
 
     private static final double ADD_MONEY_FEE = 10.0;
@@ -13,16 +15,31 @@ public class MoneyTransferService {
 
         account.setBalance(account.getBalance() + finalAmount);
 
-        printTrasnferDetail(account);
+        printTransferDetail(account);
+    }
+
+    public void TransferMoney(BankAccount account1, BankAccount account2, double amount) {
+        if (account1.getBalance() < amount) {
+            System.out.println("Not enough money in account: " + account1.getAccountNumber());
+            return;
+        }
+
+        account1.setBalance(account1.getBalance() - amount);
+        account2.setBalance(account2.getBalance() + amount);
+
+        printTransferDetail(account1);
+        printTransferDetail(account2);
+
+        System.out.println(MessageFormat.format("Amount of {0} transferred successfully to account {1}", amount, account2.getAccountNumber()));
     }
 
     public void getMoneyFromBankAccount(BankAccount account, double amount) {
         account.setBalance(account.getBalance() - amount);
 
-        printTrasnferDetail(account);
+        printTransferDetail(account);
     }
 
-    private void printTrasnferDetail(BankAccount account) {
+    private void printTransferDetail(BankAccount account) {
         System.out.println("account: " + account.getAccountNumber() + ", balance: " + account.getBalance());
     }
 }
