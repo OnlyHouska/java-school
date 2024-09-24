@@ -4,6 +4,10 @@ import org.delta.acounts.*;
 import org.delta.acounts.exceptions.NoMoneyOnAccountException;
 import org.delta.persons.Owner;
 import org.delta.persons.OwnerFactory;
+import org.delta.persons.PersonIdValidator;
+import org.delta.print.AccountDetailPrinter;
+import org.delta.print.DetailPrinter;
+import org.delta.print.SlfAccountDetailPrinted;
 
 import java.lang.annotation.Inherited;
 
@@ -23,25 +27,16 @@ public class App {
     }
 
     private void testBank() throws Exception {
+        // services
+        DIContainer servicesContainer = new DIContainer();
 
-        AccountNumberGenerator bankAccountNumberGenerator = new SlovakiaBankAccountNumberGenerator();
+        // DAOs
+        Owner owner = servicesContainer.getOwnerFactory().createOwner("Tomas", "Pesek", "123");
+        BankAccount accountOne = servicesContainer.getBankAccountFactory().createBankAccount(owner, 500);
+        BankAccount accountTwo = servicesContainer.getBankAccountFactory().createStudentBankAccount(owner, 1500, "expirace");
+        BankAccount accountThree = servicesContainer.getBankAccountFactory().createSavingBankAccount(owner, 1500);
 
-
-
-        MoneyTransferService moneyTransferService = new MoneyTransferService();
-
-        OwnerFactory ownerFactory = new OwnerFactory(bankAccountNumberGenerator);
-        BankAccountFactory bankAccountFactory = new BankAccountFactory(bankAccountNumberGenerator);
-
-        Owner owner = ownerFactory.createOwner("Tomas", "Pesek", "123");
-
-
-        BankAccount accountOne = bankAccountFactory.createBankAccount(owner, 500);
-
-
-        BankAccount accountTwo = bankAccountFactory.createStudentBankAccount(owner, 1500, "expirace");
-        BankAccount accountThree = bankAccountFactory.createSavingBankAccount(owner, 1500);
-
+        // test
         if (accountTwo instanceof StudentBankAccount) {
             String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
             System.out.println(expire);
@@ -54,12 +49,12 @@ public class App {
 
         System.out.println("Bank account balance: " + accountOne.getBalance());
 
-        moneyTransferService.addMoney(accountOne, 100);
-        moneyTransferService.addMoney(accountOne, 10);
-        moneyTransferService.addMoney(accountOne, 600);
-        moneyTransferService.subMoney(accountOne, 150);
+        servicesContainer.getMoneyTransferService().addMoney(accountOne, 100);
+        servicesContainer.getMoneyTransferService().addMoney(accountOne, 10);
+        servicesContainer.getMoneyTransferService().addMoney(accountOne, 600);
+        servicesContainer.getMoneyTransferService().subMoney(accountOne, 150);
 
-        moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+        servicesContainer.getMoneyTransferService().transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
     }
 
     private void testNum() {

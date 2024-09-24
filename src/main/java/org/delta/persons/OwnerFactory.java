@@ -5,18 +5,18 @@ import org.delta.acounts.BankAccountNumberGenerator;
 
 public class OwnerFactory {
 
-    private PersonIdValidator idValidator;
+    private PersonIdValidator personalIdValidator;
 
     private AccountNumberGenerator bankAccountNumberGenerator;
 
-    public OwnerFactory(AccountNumberGenerator bankAccountNumberGenerator) {
-        this.idValidator = new PersonIdValidator();
+    public OwnerFactory(AccountNumberGenerator bankAccountNumberGenerator, PersonIdValidator personalIdValidator) {
+        this.personalIdValidator = personalIdValidator;
         this.bankAccountNumberGenerator = bankAccountNumberGenerator;
     }
 
     public Owner createOwner(String name, String lastName, String personId) {
 
-        if (!this.idValidator.isPersonIdValid(personId)) {
+        if (!this.personalIdValidator.isPersonIdValid(personId)) {
             System.out.println("Invalid personId: " + personId);
         }
 

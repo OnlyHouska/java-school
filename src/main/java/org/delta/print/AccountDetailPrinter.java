@@ -1,9 +1,10 @@
 package org.delta.print;
 
 import org.delta.acounts.BankAccount;
+import org.delta.acounts.SavingBankAccount;
 import org.delta.acounts.StudentBankAccount;
 
-public class AccountDetailPrinter {
+public class AccountDetailPrinter implements DetailPrinter {
 
     public void printDetail(BankAccount account) {
         System.out.println(this.getPrefix(account) + " Bank account balance: " + account.getBalance());
@@ -18,7 +19,10 @@ public class AccountDetailPrinter {
             return "Student ";
         }
 
+        if (account instanceof SavingBankAccount) {
+            return "Saving ";
+        }
+
         return "";
     }
-
 }

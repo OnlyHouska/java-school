@@ -1,16 +1,16 @@
 package org.delta.acounts;
 
 import org.delta.acounts.exceptions.NoMoneyOnAccountException;
-import org.delta.print.AccountDetailPrinter;
+import org.delta.print.DetailPrinter;
 
 public class MoneyTransferService {
 
     private final TransferFeeCalculator transferFeeCalculator;
-    private final AccountDetailPrinter accountDetailPrinter;
+    private final DetailPrinter accountDetailPrinter;
 
-    public MoneyTransferService() {
-        this.transferFeeCalculator = new TransferFeeCalculator();
-        this.accountDetailPrinter = new AccountDetailPrinter();
+    public MoneyTransferService(TransferFeeCalculator transferFeeCalculator, DetailPrinter accountDetailPrinter) {
+        this.transferFeeCalculator = transferFeeCalculator;
+        this.accountDetailPrinter = accountDetailPrinter;
     }
 
     public void addMoney(BankAccount account, double amount) {
