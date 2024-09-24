@@ -6,9 +6,12 @@ public class Owner {
 
     private String surname;
 
-    public Owner(String name, String surname) {
+    private String personId;
+
+    public Owner(String name, String surname, String personId) {
         this.name = name;
         this.surname = surname;
+        this.personId = personId;
     }
 
     public String getName() {

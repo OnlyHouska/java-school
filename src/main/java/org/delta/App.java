@@ -1,12 +1,15 @@
 package org.delta;
 
-import org.delta.acounts.BankAccount;
-import org.delta.acounts.MoneyTransferService;
+import org.delta.acounts.*;
+import org.delta.acounts.exceptions.NoMoneyOnAccountException;
 import org.delta.persons.Owner;
+import org.delta.persons.OwnerFactory;
+
+import java.lang.annotation.Inherited;
 
 public class App {
 
-    public void run() {
+    public void run() throws Exception {
         System.out.println("Hello and welcome!");
 
         this.testBank();
@@ -19,19 +22,44 @@ public class App {
          */
     }
 
-    private void testBank() {
+    private void testBank() throws Exception {
+
+        AccountNumberGenerator bankAccountNumberGenerator = new SlovakiaBankAccountNumberGenerator();
+
+
 
         MoneyTransferService moneyTransferService = new MoneyTransferService();
 
-        Owner owner = new Owner("Tomas", "Pesek");
-        BankAccount account = new BankAccount(500, owner, "ABC123");
+        OwnerFactory ownerFactory = new OwnerFactory(bankAccountNumberGenerator);
+        BankAccountFactory bankAccountFactory = new BankAccountFactory(bankAccountNumberGenerator);
 
-        System.out.println("Bank account balance: " + account.getBalance());
+        Owner owner = ownerFactory.createOwner("Tomas", "Pesek", "123");
 
-        moneyTransferService.addMoney(account, 100);
-        moneyTransferService.addMoney(account, 10);
-        moneyTransferService.addMoney(account, 600);
-        moneyTransferService.subMoney(account, 150);
+
+        BankAccount accountOne = bankAccountFactory.createBankAccount(owner, 500);
+
+
+        BankAccount accountTwo = bankAccountFactory.createStudentBankAccount(owner, 1500, "expirace");
+        BankAccount accountThree = bankAccountFactory.createSavingBankAccount(owner, 1500);
+
+        if (accountTwo instanceof StudentBankAccount) {
+            String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
+            System.out.println(expire);
+        }
+
+        if (accountThree instanceof Interesting) {
+            double interest = ((Interesting) accountThree).getInterest();
+            System.out.println(interest);
+        }
+
+        System.out.println("Bank account balance: " + accountOne.getBalance());
+
+        moneyTransferService.addMoney(accountOne, 100);
+        moneyTransferService.addMoney(accountOne, 10);
+        moneyTransferService.addMoney(accountOne, 600);
+        moneyTransferService.subMoney(accountOne, 150);
+
+        moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
     }
 
     private void testNum() {
@@ -70,5 +98,4 @@ public class App {
         System.out.println(calculator.mul(10, 20));
         System.out.println(calculator.div(10, 0));
     }
-
 }

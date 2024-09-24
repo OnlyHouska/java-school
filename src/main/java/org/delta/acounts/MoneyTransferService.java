@@ -1,5 +1,6 @@
 package org.delta.acounts;
 
+import org.delta.acounts.exceptions.NoMoneyOnAccountException;
 import org.delta.print.AccountDetailPrinter;
 
 public class MoneyTransferService {
@@ -28,5 +29,28 @@ public class MoneyTransferService {
 
         account.setBalance(newBalance);
         this.accountDetailPrinter.printDetail(account);
+    }
+
+    public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {
+        System.out.println("MoneyTransferService::transferMoneyBetweenAccounts, amount: " + amount);
+
+        if (from.getBalance() < amount) {
+            throw new NoMoneyOnAccountException("Not money on account!");
+        }
+
+        this.accountDetailPrinter.printDetail(from);
+        this.accountDetailPrinter.printDetail(to);
+
+        double sourceBalance = from.getBalance();
+        double newSourceBalance = sourceBalance - amount;
+
+        from.setBalance(newSourceBalance);
+        double destinationBalance = to.getBalance();
+        double newDestinationBalance = destinationBalance + amount;
+
+        to.setBalance(newDestinationBalance);
+
+        this.accountDetailPrinter.printDetail(from);
+        this.accountDetailPrinter.printDetail(to);
     }
 }
