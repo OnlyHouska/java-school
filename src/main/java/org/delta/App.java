@@ -1,15 +1,8 @@
 package org.delta;
 
+import com.google.inject.Inject;
 import org.delta.acounts.*;
-import org.delta.acounts.exceptions.NoMoneyOnAccountException;
-import org.delta.persons.Owner;
-import org.delta.persons.OwnerFactory;
-import org.delta.persons.PersonIdValidator;
-import org.delta.print.AccountDetailPrinter;
-import org.delta.print.DetailPrinter;
-import org.delta.print.SlfAccountDetailPrinted;
-
-import java.lang.annotation.Inherited;
+import org.delta.persons.*;
 
 public class App {
 
@@ -26,15 +19,17 @@ public class App {
          */
     }
 
-    private void testBank() throws Exception {
-        // services
-        DIContainer servicesContainer = new DIContainer();
+    @Inject
+    private DIContainer servicesContainer;
 
+    private void testBank() throws Exception {
         // DAOs
         Owner owner = servicesContainer.getOwnerFactory().createOwner("Tomas", "Pesek", "123");
         BankAccount accountOne = servicesContainer.getBankAccountFactory().createBankAccount(owner, 500);
         BankAccount accountTwo = servicesContainer.getBankAccountFactory().createStudentBankAccount(owner, 1500, "expirace");
         BankAccount accountThree = servicesContainer.getBankAccountFactory().createSavingBankAccount(owner, 1500);
+
+        System.out.println(servicesContainer.getPersonJsonSerializationService().serializeOwner(owner));
 
         // test
         if (accountTwo instanceof StudentBankAccount) {

@@ -10,11 +10,11 @@ public class SlfAccountDetailPrinted implements DetailPrinter {
 
     @Override
     public void printDetail(BankAccount account) {
-        logger.warn("test");
+        logger.error(PrinterUtils.getPrefix(account) + " Bank account balance: " + account.getBalance());
     }
 
     @Override
     public void printDetail(BankAccount account, double fee) {
-        logger.info("test");
+        logger.error(PrinterUtils.getPrefix(account) + " Bank account balance: " + account.getBalance() + ", fee " + fee);
     }
 }
