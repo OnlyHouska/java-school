@@ -1,4 +1,4 @@
-package org.delta.acounts;
+package org.delta.accounts;
 
 import org.delta.persons.Owner;
 

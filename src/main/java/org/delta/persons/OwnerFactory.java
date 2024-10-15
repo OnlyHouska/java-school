@@ -2,7 +2,7 @@ package org.delta.persons;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.acounts.AccountNumberGenerator;
+import org.delta.accounts.AccountNumberGenerator;
 
 @Singleton
 public class OwnerFactory {

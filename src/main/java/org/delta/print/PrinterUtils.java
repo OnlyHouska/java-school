@@ -1,8 +1,8 @@
 package org.delta.print;
 
-import org.delta.acounts.BankAccount;
-import org.delta.acounts.SavingBankAccount;
-import org.delta.acounts.StudentBankAccount;
+import org.delta.accounts.BankAccount;
+import org.delta.accounts.SavingBankAccount;
+import org.delta.accounts.StudentBankAccount;
 
 public class PrinterUtils {
     private PrinterUtils() {}

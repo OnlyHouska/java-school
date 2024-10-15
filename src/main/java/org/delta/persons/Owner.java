@@ -1,5 +1,8 @@
 package org.delta.persons;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class Owner {
 
     private String name;
@@ -20,5 +23,9 @@ public class Owner {
 
     public String getSurname() {
         return surname;
+    }
+
+    public String getPersonId() {
+        return personId;
     }
 }

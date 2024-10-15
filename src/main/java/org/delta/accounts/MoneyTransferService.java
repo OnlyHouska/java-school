@@ -1,15 +1,15 @@
-package org.delta.acounts;
+package org.delta.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.acounts.exceptions.NoMoneyOnAccountException;
-import org.delta.print.DetailPrinter;
+import org.delta.accounts.exceptions.NoMoneyOnAccountException;
+import org.delta.print.AccountDetailPrinter;
 
 @Singleton
 public class MoneyTransferService {
 
     @Inject private TransferFeeCalculator transferFeeCalculator;
-    @Inject private DetailPrinter accountDetailPrinter;
+    @Inject private AccountDetailPrinter accountDetailPrinter;
 
     public void addMoney(BankAccount account, double amount) {
         double balance = account.getBalance();

@@ -1,4 +1,4 @@
-package org.delta.acounts.exceptions;
+package org.delta.accounts.exceptions;
 
 public class NoMoneyOnAccountException extends Exception {
 
