@@ -13,11 +13,11 @@ public class BankAccountFactory {
     public BankAccount createBankAccount(Owner owner, double balance) {
         String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
 
-        return new BankAccount(balance, owner, bankAccountNumber);
+        return new BankAccount(bankAccountNumber, balance, owner);
     }
 
     public BankAccount createBankAccount(Owner owner, double balance, String bankAccountNumber) {
-        return new BankAccount(balance, owner, bankAccountNumber);
+        return new BankAccount(bankAccountNumber, balance, owner);
     }
 
     public BankAccount createStudentBankAccount(Owner owner, double balance) {

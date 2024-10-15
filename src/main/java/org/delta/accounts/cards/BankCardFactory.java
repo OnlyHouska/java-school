@@ -6,8 +6,9 @@ public class BankCardFactory {
     @Inject private CardNumberGenerator cardNumberGenerator;
     @Inject private BankCardPinGenerator bankCardPinGenerator;
 
-    public BankCard createBankCard(String pin) {
+    public BankCard createBankCard() {
         String number = this.cardNumberGenerator.generate();
+        String pin = this.bankCardPinGenerator.generate();
 
         return new BankCard(number, pin);
     }

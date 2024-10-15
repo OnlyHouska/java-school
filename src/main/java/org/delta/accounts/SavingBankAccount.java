@@ -5,7 +5,7 @@ import org.delta.persons.Owner;
 public class SavingBankAccount extends BankAccount implements Interesting {
 
     public SavingBankAccount(double balance, Owner owner, String accountNumber) {
-        super(balance, owner, accountNumber);
+        super(accountNumber, balance, owner);
     }
 
     @Override

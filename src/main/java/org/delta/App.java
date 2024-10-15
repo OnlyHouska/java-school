@@ -13,7 +13,7 @@ public class App {
         this.testBank();
     }
 
-    @Inject BankAccountFactory bankAccountFactory;
+    @Inject BankAccountFacade bankAccountFacade;
 
     @Inject OwnerFactory ownerFactory;
 
@@ -21,14 +21,13 @@ public class App {
 
     @Inject BankCardFactory bankCardFactory;
 
+    @Inject AtmService atmService;
+
     private void testBank() throws Exception {
         Owner owner = ownerFactory.createOwner("Tomas", "Pesek", "123");
-        BankAccount accountOne = bankAccountFactory.createBankAccount(owner, 500);
-        BankAccount accountTwo = bankAccountFactory.createStudentBankAccount(owner, 1500, "expirace");
-        BankAccount accountThree = bankAccountFactory.createSavingBankAccount(owner, 1500);
-
-        BankCard cardOne = bankCardFactory.createBankCard("1234");
-        accountOne.assignNewCard(cardOne);
+        BankAccount accountOne = bankAccountFacade.createBankAccount(500, owner, true);
+        BankAccount accountTwo = bankAccountFacade.createStudentBankAccount(1500, owner, false);
+        BankAccount accountThree = bankAccountFacade.createSavingBankAccount(675, owner, true);
 
         // test
         if (accountTwo instanceof StudentBankAccount) {
@@ -43,6 +42,7 @@ public class App {
 
         System.out.println("Bank account balance: " + accountOne.getBalance());
 
+        atmService.withdrawMoney(accountOne.getCard("9999"), 100);
 //        moneyTransferService.addMoney(accountOne, 100);
 //        moneyTransferService.addMoney(accountOne, 10);
 //        moneyTransferService.addMoney(accountOne, 600);

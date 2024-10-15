@@ -1,23 +1,23 @@
 package org.delta.accounts;
 
-import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.delta.accounts.cards.BankCard;
-import org.delta.accounts.cards.BankCardFactory;
 import org.delta.persons.Owner;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Singleton
 public class BankAccount {
-    private String accountNumber;
+    private final String accountNumber;
     private double balance;
-    private Owner owner;
+    private final Owner owner;
 
-    private Map<String, BankCard> cardsInMap;
+    private final Map<String, BankCard> cardsInMap;
 
 
 
-    public BankAccount(double balance, Owner owner, String accountNumber) {
+    public BankAccount(String accountNumber, double balance, Owner owner) {
         this.accountNumber = accountNumber;
         this.balance = balance;
         this.owner = owner;
