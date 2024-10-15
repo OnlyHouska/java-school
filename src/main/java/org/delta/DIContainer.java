@@ -1,13 +1,11 @@
 package org.delta;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import org.delta.acounts.*;
-import org.delta.persons.*;
+import org.delta.persons.OwnerFactory;
+import org.delta.persons.PersonIdValidator;
 import org.delta.print.DetailPrinter;
 import org.delta.print.SlfAccountDetailPrinted;
 
-@Singleton
 public class DIContainer {
 
     private AccountNumberGenerator bankAccountNumberGenerator = new SlovakiaBankAccountNumberGenerator();
@@ -16,11 +14,7 @@ public class DIContainer {
     private PersonIdValidator personIdValidator = new PersonIdValidator();
     private MoneyTransferService moneyTransferService = new MoneyTransferService(transferFeeCalculator, accountDetailPrinter);
     private OwnerFactory ownerFactory = new OwnerFactory(bankAccountNumberGenerator, personIdValidator);
-
-    @Inject
-    private BankAccountFactory bankAccountFactory;
-
-    private PersonSerializationService personJsonSerializationService = new PersonGsonSerializationService();
+    private BankAccountFactory bankAccountFactory = new BankAccountFactory(bankAccountNumberGenerator);
 
     public AccountNumberGenerator getBankAccountNumberGenerator() {
         return bankAccountNumberGenerator;
@@ -48,9 +42,5 @@ public class DIContainer {
 
     public BankAccountFactory getBankAccountFactory() {
         return bankAccountFactory;
-    }
-
-    public PersonSerializationService getPersonJsonSerializationService() {
-        return personJsonSerializationService;
     }
 }

@@ -1,21 +1,12 @@
 package org.delta.persons;
 
-public class PersonJsonSerializationService implements PersonSerializationService {
+public class PersonJsonSerializationService {
     public String serializeOwner(Owner owner) {
-        StringBuilder builder = new StringBuilder();
+        return "{\n" +
+                "    \"name\": \"" + owner.getName() + "\",\n" +
+                "    \"surname\": \"" + owner.getSurname() + "\",\n" +
+                "    \"personId\": \"" + owner.getPersonId() + "\"\n" +
+                "}";
 
-        builder.append("{");
-        builder.append("\"name\": ");
-        builder.append("\"" + owner.getName() + "\", ");
-
-        builder.append("\"lastName\": ");
-        builder.append("\"" + owner.getSurname() + "\", ");
-
-        builder.append("\"personId\": ");
-        builder.append("\"" + owner.getPersonId() + "\" ");
-
-        builder.append("}");
-
-        return builder.toString();
     }
 }

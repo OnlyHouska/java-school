@@ -1,18 +1,17 @@
 package org.delta.persons;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.delta.acounts.AccountNumberGenerator;
-import org.delta.acounts.BankAccountNumberGenerator;
 
+@Singleton
 public class OwnerFactory {
 
+    @Inject
     private PersonIdValidator personalIdValidator;
 
+    @Inject
     private AccountNumberGenerator bankAccountNumberGenerator;
-
-    public OwnerFactory(AccountNumberGenerator bankAccountNumberGenerator, PersonIdValidator personalIdValidator) {
-        this.personalIdValidator = personalIdValidator;
-        this.bankAccountNumberGenerator = bankAccountNumberGenerator;
-    }
 
     public Owner createOwner(String name, String lastName, String personId) {
 

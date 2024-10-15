@@ -1,7 +1,5 @@
 package org.delta.persons;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Owner {
 
     private String name;
@@ -22,9 +20,5 @@ public class Owner {
 
     public String getSurname() {
         return surname;
-    }
-
-    public String getPersonId() {
-        return personId;
     }
 }
