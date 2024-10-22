@@ -2,7 +2,7 @@ package org.delta.persons;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
+public class Owner{
 
     private String name;
 

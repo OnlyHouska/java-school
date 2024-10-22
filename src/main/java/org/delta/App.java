@@ -2,34 +2,37 @@ package org.delta;
 
 import com.google.inject.Inject;
 import org.delta.acounts.*;
+import org.delta.acounts.cards.BankCard;
 import org.delta.persons.*;
+
+import java.util.Map;
 
 public class App {
 
-    public void run() throws Exception {
-        System.out.println("Hello and welcome!");
-
-        this.testBank();
-
-        /*
-        this.testCalc();
-        this.testStrings();
-        this.testNum();
-        this.testFor();
-         */
-    }
+    @Inject
+    private PersonSerializationService personJsonSerializationService;
 
     @Inject
-    private DIContainer servicesContainer;
+    private OwnerFactory ownerFactory;
+
+    @Inject
+    private BankAccountFacade bankAccountFacade;
+
+    @Inject
+    private MoneyTransferService moneyTransferService;
+
+    @Inject
+    private AtmService atmService;
 
     private void testBank() throws Exception {
         // DAOs
-        Owner owner = servicesContainer.getOwnerFactory().createOwner("Tomas", "Pesek", "123");
-        BankAccount accountOne = servicesContainer.getBankAccountFactory().createBankAccount(owner, 500);
-        BankAccount accountTwo = servicesContainer.getBankAccountFactory().createStudentBankAccount(owner, 1500, "expirace");
-        BankAccount accountThree = servicesContainer.getBankAccountFactory().createSavingBankAccount(owner, 1500);
+        Owner owner = this.ownerFactory.createOwner("Tomas", "Pesek", "123");
 
-        System.out.println(servicesContainer.getPersonJsonSerializationService().serializeOwner(owner));
+        BankAccount accountOne = this.bankAccountFacade.createBankAccount(owner, 500, true);
+        BankAccount accountTwo = this.bankAccountFacade.createStudentBankAccount(owner, 1500, "expirace");
+        BankAccount accountThree = this.bankAccountFacade.createSavingBankAccount(owner, 1500);
+
+        System.out.println(this.personJsonSerializationService.serializeOwner(owner));
 
         // test
         if (accountTwo instanceof StudentBankAccount) {
@@ -44,12 +47,24 @@ public class App {
 
         System.out.println("Bank account balance: " + accountOne.getBalance());
 
-        servicesContainer.getMoneyTransferService().addMoney(accountOne, 100);
-        servicesContainer.getMoneyTransferService().addMoney(accountOne, 10);
-        servicesContainer.getMoneyTransferService().addMoney(accountOne, 600);
-        servicesContainer.getMoneyTransferService().subMoney(accountOne, 150);
+        this.moneyTransferService.addMoney(accountOne, 100);
+        this.moneyTransferService.addMoney(accountOne, 10);
+        this.moneyTransferService.addMoney(accountOne, 600);
+        this.moneyTransferService.subMoney(accountOne, 150);
 
-        servicesContainer.getMoneyTransferService().transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+        this.moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+
+        System.out.println();
+        System.out.println("ATM SERVICE TEST");
+
+        // hack
+        BankCard bankCard = null;
+        for (Map.Entry<String, BankCard> entrySet : accountOne.getCards().entrySet()) {
+            bankCard = entrySet.getValue();
+        }
+        // hack
+
+        this.atmService.withdrawMoney(bankCard.getNumber(), bankCard.getPin(), 500);
     }
 
     private void testNum() {
@@ -87,5 +102,18 @@ public class App {
         System.out.println(calculator.sub(10, 20));
         System.out.println(calculator.mul(10, 20));
         System.out.println(calculator.div(10, 0));
+    }
+
+    public void run() throws Exception {
+        System.out.println("Hello and welcome!");
+
+        this.testBank();
+
+        /*
+        this.testCalc();
+        this.testStrings();
+        this.testNum();
+        this.testFor();
+         */
     }
 }

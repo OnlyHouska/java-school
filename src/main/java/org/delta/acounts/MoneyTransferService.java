@@ -1,19 +1,21 @@
 package org.delta.acounts;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.delta.acounts.exceptions.NoMoneyOnAccountException;
 import org.delta.print.DetailPrinter;
 
+@Singleton
 public class MoneyTransferService {
 
-    private final TransferFeeCalculator transferFeeCalculator;
-    private final DetailPrinter accountDetailPrinter;
+    @Inject
+    private TransferFeeCalculator transferFeeCalculator;
 
-    public MoneyTransferService(TransferFeeCalculator transferFeeCalculator, DetailPrinter accountDetailPrinter) {
-        this.transferFeeCalculator = transferFeeCalculator;
-        this.accountDetailPrinter = accountDetailPrinter;
-    }
+    @Inject
+    private DetailPrinter accountDetailPrinter;
 
     public void addMoney(BankAccount account, double amount) {
+        System.out.println("ADD money " + amount);
         double balance = account.getBalance();
         double fee = this.transferFeeCalculator.calculateFee(amount);
 
@@ -24,6 +26,8 @@ public class MoneyTransferService {
     }
 
     public void subMoney(BankAccount account, double amount) {
+        System.out.println("SUB money " + amount);
+        this.accountDetailPrinter.printDetail(account);
         double balance = account.getBalance();
         double newBalance = balance - amount;
 

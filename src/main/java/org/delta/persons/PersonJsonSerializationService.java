@@ -1,5 +1,8 @@
 package org.delta.persons;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class PersonJsonSerializationService implements PersonSerializationService {
     public String serializeOwner(Owner owner) {
         StringBuilder builder = new StringBuilder();
