@@ -23,15 +23,13 @@ public class AtmService {
         if (bankAccount == null) {
             throw new IllegalArgumentException("With this card is not associated any bank account and/or it does not exist.");
         }
-        if (bankAccount.getBalance() < amount) {
-            throw new NoMoneyOnAccountException("Not enough money on account");
-        }
         if (!validateAccess(bankCard)) {
             throw new IllegalArgumentException("Invalid pin");
         }
 
-        System.out.println("You have withdrawn " + amount + " from your account");
         moneyTransferService.subMoney(bankAccount, amount);
+        System.out.println("You have withdrawn " + amount + " from your account");
+        System.out.println(bankAccount.getBalance());
     }
 
     private BankAccount validateBankAccount(BankCard bankCard) {

@@ -21,12 +21,15 @@ public class MoneyTransferService {
         this.accountDetailPrinter.printDetail(account, fee);
     }
 
-    public void subMoney(BankAccount account, double amount) {
+    public void subMoney(BankAccount account, double amount) throws NoMoneyOnAccountException {
+        if (account.getBalance() < amount) {
+            throw new NoMoneyOnAccountException("Not enough money on account");
+        }
+
         double balance = account.getBalance();
         double newBalance = balance - amount;
 
         account.setBalance(newBalance);
-        this.accountDetailPrinter.printDetail(account);
     }
 
     public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {
