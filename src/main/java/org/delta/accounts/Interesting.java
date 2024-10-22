@@ -1,7 +1,9 @@
 package org.delta.accounts;
 
-public interface Interesting {
+public class Interesting {
 
-    public double getInterest();
+    public double getInterest() {
+        return 5;
+    };
 
 }

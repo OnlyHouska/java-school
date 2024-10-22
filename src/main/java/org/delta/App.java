@@ -13,6 +13,8 @@ public class App {
         this.testBank();
     }
 
+    @Inject InterestingService interestingService;
+
     @Inject BankAccountFacade bankAccountFacade;
 
     @Inject OwnerFactory ownerFactory;
@@ -30,24 +32,20 @@ public class App {
         BankAccount accountThree = bankAccountFacade.createSavingBankAccount(675, owner, true);
 
         // test
-        if (accountTwo instanceof StudentBankAccount) {
-            String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
-            System.out.println(expire);
-        }
+//        if (accountTwo instanceof StudentBankAccount) {
+//            String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
+//            System.out.println(expire);
+//        }
+//
+//        if (accountThree instanceof Interesting) {
+//            double interest = ((Interesting) accountThree).getInterest();
+//            System.out.println(interest);
+//        }
+//
+//        System.out.println("Bank account balance: " + accountOne.getBalance());
 
-        if (accountThree instanceof Interesting) {
-            double interest = ((Interesting) accountThree).getInterest();
-            System.out.println(interest);
-        }
+//        atmService.withdrawMoney(accountOne.getCard("9999"), 100);
 
-        System.out.println("Bank account balance: " + accountOne.getBalance());
-
-        atmService.withdrawMoney(accountOne.getCard("9999"), 100);
-//        moneyTransferService.addMoney(accountOne, 100);
-//        moneyTransferService.addMoney(accountOne, 10);
-//        moneyTransferService.addMoney(accountOne, 600);
-//        moneyTransferService.subMoney(accountOne, 150);
-
-//        moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+        interestingService.run();
     }
 }

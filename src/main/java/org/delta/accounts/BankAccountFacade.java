@@ -34,12 +34,28 @@ public class BankAccountFacade {
     }
 
     public BankAccount createStudentBankAccount(double balance, Owner owner, boolean withCard) {
+        BankAccount bankAccount =  bankAccountFactory.createStudentBankAccount(owner, balance);
+        globalAccountStorage.save(bankAccount);
 
-        return bankAccountFactory.createStudentBankAccount(owner, balance);
+        if (withCard) {
+            BankCard bankCard = bankCardFactory.createBankCard();
+            bankAccount.assignNewCard(bankCard);
+            globalCardStorage.save(bankAccount, bankCard);
+        }
+
+        return bankAccount;
     }
 
     public BankAccount createSavingBankAccount(double balance, Owner owner, boolean withCard) {
+        BankAccount bankAccount = bankAccountFactory.createSavingBankAccount(owner, balance);
+        globalAccountStorage.save(bankAccount);
 
-        return bankAccountFactory.createSavingBankAccount(owner, balance);
+        if (withCard) {
+            BankCard bankCard = bankCardFactory.createBankCard();
+            bankAccount.assignNewCard(bankCard);
+            globalCardStorage.save(bankAccount, bankCard);
+        }
+
+        return bankAccount;
     }
 }
