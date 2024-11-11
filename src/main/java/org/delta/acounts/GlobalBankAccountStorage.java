@@ -14,4 +14,7 @@ public class GlobalBankAccountStorage {
         this.bankAccounts.add(bankAccount);
     }
 
+    public List<BankAccount> getBankAccounts() {
+        return bankAccounts;
+    }
 }

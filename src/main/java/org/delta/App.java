@@ -3,6 +3,7 @@ package org.delta;
 import com.google.inject.Inject;
 import org.delta.acounts.*;
 import org.delta.acounts.cards.BankCard;
+import org.delta.acounts.interesting.InterestingService;
 import org.delta.persons.*;
 
 import java.util.Map;
@@ -23,6 +24,9 @@ public class App {
 
     @Inject
     private AtmService atmService;
+
+    @Inject
+    private InterestingService interestingService;
 
     private void testBank() throws Exception {
         // DAOs
@@ -63,8 +67,9 @@ public class App {
             bankCard = entrySet.getValue();
         }
         // hack
-
         this.atmService.withdrawMoney(bankCard.getNumber(), bankCard.getPin(), 500);
+
+        this.interestingService.run();
     }
 
     private void testNum() {
