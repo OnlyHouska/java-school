@@ -1,7 +1,7 @@
 package org.delta.print;
 
 import com.google.inject.Singleton;
-import org.delta.accounts.BankAccount;
+import org.delta.acounts.BankAccount;
 
 @Singleton
 public class AccountDetailPrinter implements DetailPrinter {

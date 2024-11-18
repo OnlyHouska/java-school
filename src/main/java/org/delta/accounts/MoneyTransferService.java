@@ -1,17 +1,21 @@
-package org.delta.accounts;
+package org.delta.acounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.accounts.exceptions.NoMoneyOnAccountException;
-import org.delta.print.AccountDetailPrinter;
+import org.delta.acounts.exceptions.NoMoneyOnAccountException;
+import org.delta.print.DetailPrinter;
 
 @Singleton
 public class MoneyTransferService {
 
-    @Inject private TransferFeeCalculator transferFeeCalculator;
-    @Inject private AccountDetailPrinter accountDetailPrinter;
+    @Inject
+    private TransferFeeCalculator transferFeeCalculator;
+
+    @Inject
+    private DetailPrinter accountDetailPrinter;
 
     public void addMoney(BankAccount account, double amount) {
+        System.out.println("ADD money " + amount);
         double balance = account.getBalance();
         double fee = this.transferFeeCalculator.calculateFee(amount);
 
@@ -21,15 +25,14 @@ public class MoneyTransferService {
         this.accountDetailPrinter.printDetail(account, fee);
     }
 
-    public void subMoney(BankAccount account, double amount) throws NoMoneyOnAccountException {
-        if (account.getBalance() < amount) {
-            throw new NoMoneyOnAccountException("Not enough money on account");
-        }
-
+    public void subMoney(BankAccount account, double amount) {
+        System.out.println("SUB money " + amount);
+        this.accountDetailPrinter.printDetail(account);
         double balance = account.getBalance();
         double newBalance = balance - amount;
 
         account.setBalance(newBalance);
+        this.accountDetailPrinter.printDetail(account);
     }
 
     public void transferMoneyBetweenAccounts(BankAccount from, BankAccount to, double amount) throws NoMoneyOnAccountException {

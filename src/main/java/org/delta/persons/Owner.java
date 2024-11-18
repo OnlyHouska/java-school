@@ -1,9 +1,8 @@
 package org.delta.persons;
 
-import com.google.inject.Singleton;
+import com.google.gson.annotations.SerializedName;
 
-@Singleton
-public class Owner {
+public class Owner{
 
     private String name;
 

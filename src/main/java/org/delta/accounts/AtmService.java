@@ -1,47 +1,28 @@
-package org.delta.accounts;
+package org.delta.acounts;
 
 import com.google.inject.Inject;
-import org.delta.accounts.cards.BankCard;
-import org.delta.accounts.exceptions.NoMoneyOnAccountException;
+import com.google.inject.Singleton;
+import org.delta.acounts.cards.BankCard;
+import org.delta.acounts.exceptions.InvalidPinException;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
+@Singleton
 public class AtmService {
-    @Inject
-    MoneyTransferService moneyTransferService;
 
     @Inject
-    GlobalCardStorage globalCardStorage;
+    private GlobalCardStorage globalCardStorage;
 
     @Inject
-    GlobalAccountStorage globalAccountStorage;
+    private MoneyTransferService moneyTransferService;
 
-    public void withdrawMoney(BankCard bankCard, double amount) throws NoMoneyOnAccountException {
-        BankAccount bankAccount = validateBankAccount(bankCard);
+    public void withdrawMoney(String cardNumber, String pin, double amount) {
+        BankAccount bankAccount = globalCardStorage.getBankAccount(cardNumber);
+        BankCard bankCard = bankAccount.getCard(cardNumber);
 
-        if (bankAccount == null) {
-            throw new IllegalArgumentException("With this card is not associated any bank account and/or it does not exist.");
-        }
-        if (!validateAccess(bankCard)) {
-            throw new IllegalArgumentException("Invalid pin");
+        if (!bankCard.getPin().equals(pin)) {
+            throw new InvalidPinException();
         }
 
-        moneyTransferService.subMoney(bankAccount, amount);
-        System.out.println("You have withdrawn " + amount + " from your account");
-        System.out.println(bankAccount.getBalance());
+        this.moneyTransferService.subMoney(bankAccount, amount);
     }
 
-    private BankAccount validateBankAccount(BankCard bankCard) {
-        return globalCardStorage.bankCards.getOrDefault(bankCard, null);
-    }
-
-    private boolean validateAccess(BankCard bankCard) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter a card pin:");
-        String enteredPin = scanner.nextLine();
-
-        return bankCard.getPin().equals(enteredPin);
-    }
 }

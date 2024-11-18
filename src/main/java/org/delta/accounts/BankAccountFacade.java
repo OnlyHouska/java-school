@@ -1,18 +1,13 @@
-package org.delta.accounts;
+package org.delta.acounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.accounts.cards.BankCard;
-import org.delta.accounts.cards.BankCardFactory;
+import org.delta.acounts.cards.BankCard;
+import org.delta.acounts.cards.BankCardFactory;
 import org.delta.persons.Owner;
 
 @Singleton
 public class BankAccountFacade {
-    @Inject
-    private GlobalAccountStorage globalAccountStorage;
-
-    @Inject
-    private GlobalCardStorage globalCardStorage;
 
     @Inject
     private BankAccountFactory bankAccountFactory;
@@ -20,42 +15,36 @@ public class BankAccountFacade {
     @Inject
     private BankCardFactory bankCardFactory;
 
-    public BankAccount createBankAccount(double balance, Owner owner, boolean withCard) {
-        BankAccount bankAccount = bankAccountFactory.createBankAccount(owner, balance);
-        globalAccountStorage.save(bankAccount);
+    @Inject
+    private GlobalCardStorage globalCardStorage;
+
+    @Inject
+    private GlobalBankAccountStorage globalBankAccountStorage;
+
+    public BankAccount createBankAccount(Owner owner, double balance, boolean withCard) {
+        BankAccount account = this.bankAccountFactory.createBankAccount(owner, balance);
+        this.globalBankAccountStorage.add(account);
 
         if (withCard) {
-            BankCard bankCard = bankCardFactory.createBankCard();
-            bankAccount.assignNewCard(bankCard);
-            globalCardStorage.save(bankAccount, bankCard);
+            BankCard card = this.bankCardFactory.createBankCard(account);
+            account.addCard(card);
+            this.globalCardStorage.addBankCard(card.getNumber(), account);
         }
 
-        return bankAccount;
+        return account;
     }
 
-    public BankAccount createStudentBankAccount(double balance, Owner owner, boolean withCard) {
-        BankAccount bankAccount =  bankAccountFactory.createStudentBankAccount(owner, balance);
-        globalAccountStorage.save(bankAccount);
+    public BankAccount createStudentBankAccount(Owner owner, double balance, String expire) {
+        BankAccount account = this.bankAccountFactory.createStudentBankAccount(owner, balance, expire);
+        this.globalBankAccountStorage.add(account);
 
-        if (withCard) {
-            BankCard bankCard = bankCardFactory.createBankCard();
-            bankAccount.assignNewCard(bankCard);
-            globalCardStorage.save(bankAccount, bankCard);
-        }
-
-        return bankAccount;
+        return account;
     }
 
-    public BankAccount createSavingBankAccount(double balance, Owner owner, boolean withCard) {
-        BankAccount bankAccount = bankAccountFactory.createSavingBankAccount(owner, balance);
-        globalAccountStorage.save(bankAccount);
+    public BankAccount createSavingBankAccount(Owner owner, double balance) {
+        BankAccount account = this.bankAccountFactory.createSavingBankAccount(owner, balance);
+        this.globalBankAccountStorage.add(account);
 
-        if (withCard) {
-            BankCard bankCard = bankCardFactory.createBankCard();
-            bankAccount.assignNewCard(bankCard);
-            globalCardStorage.save(bankAccount, bankCard);
-        }
-
-        return bankAccount;
+        return account;
     }
 }

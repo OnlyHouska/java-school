@@ -1,7 +1,10 @@
 package org.delta.accounts;
 
+import com.google.inject.Singleton;
+
 import java.util.Random;
 
+@Singleton
 public class BankAccountNumberGenerator implements AccountNumberGenerator {
 
     private static final byte BASE_ACCOUNT_NUMBER_LENGTH = 10;

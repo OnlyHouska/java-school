@@ -1,9 +1,10 @@
 package org.delta.print;
 
-import org.delta.accounts.BankAccount;
+import com.google.inject.Inject;
+import org.delta.acounts.BankAccount;
 
 public interface DetailPrinter {
-    void printDetail(BankAccount account);
+    public void printDetail(BankAccount account);
 
-    void printDetail(BankAccount account, double fee);
+    public void printDetail(BankAccount account, double fee);
 }

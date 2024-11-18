@@ -1,4 +1,4 @@
-package org.delta.accounts;
+package org.delta.acounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -12,12 +12,11 @@ public class BankAccountFactory {
 
     public BankAccount createBankAccount(Owner owner, double balance) {
         String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
-
-        return new BankAccount(bankAccountNumber, balance, owner);
+        return new BankAccount(balance, owner, bankAccountNumber);
     }
 
     public BankAccount createBankAccount(Owner owner, double balance, String bankAccountNumber) {
-        return new BankAccount(bankAccountNumber, balance, owner);
+        return new BankAccount(balance, owner, bankAccountNumber);
     }
 
     public BankAccount createStudentBankAccount(Owner owner, double balance) {

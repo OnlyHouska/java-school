@@ -1,16 +1,20 @@
-package org.delta.accounts;
+package org.delta.acounts;
 
 import com.google.inject.Singleton;
-import org.delta.accounts.cards.BankCard;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class GlobalCardStorage {
-    Map<BankCard, BankAccount> bankCards = new HashMap<>();
+    public class GlobalCardStorage {
 
-    public void save(BankAccount bankAccount, BankCard bankCard) {
-        bankCards.put(bankCard, bankAccount);
+    private Map<String, BankAccount> bankCards = new HashMap<>();
+
+    public BankAccount getBankAccount(String cardNumber) {
+        return bankCards.get(cardNumber);
+    }
+
+    public void addBankCard(String cardNumber, BankAccount bankAccount) {
+        bankCards.put(cardNumber, bankAccount);
     }
 }
