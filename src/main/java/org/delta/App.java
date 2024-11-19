@@ -30,7 +30,7 @@ public class App {
 
     private void testBank() throws Exception {
         // DAOs
-        Owner owner = this.ownerFactory.createOwner("Tomas", "Pesek", "123");
+        Owner owner = this.ownerFactory.createOwner("Jan", "Kocanda ", "123");
 
         BankAccount accountOne = this.bankAccountFacade.createBankAccount(owner, 500, true);
         BankAccount accountTwo = this.bankAccountFacade.createStudentBankAccount(owner, 1500, "expirace");
