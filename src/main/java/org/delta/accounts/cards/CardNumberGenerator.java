@@ -1,4 +1,4 @@
-package org.delta.acounts.cards;
+package org.delta.accounts.cards;
 
 import com.google.inject.Singleton;
 

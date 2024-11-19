@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Owner{
 
-    private String name;
+    private final String name;
 
-    private String surname;
+    private final String surname;
 
-    private String personId;
+    private final String personId;
 
     public Owner(String name, String surname, String personId) {
         this.name = name;

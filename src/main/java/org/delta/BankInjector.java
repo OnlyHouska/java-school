@@ -1,8 +1,8 @@
 package org.delta;
 
 import com.google.inject.AbstractModule;
-import org.delta.acounts.AccountNumberGenerator;
-import org.delta.acounts.SlovakiaBankAccountNumberGenerator;
+import org.delta.accounts.AccountNumberGenerator;
+import org.delta.accounts.SlovakiaBankAccountNumberGenerator;
 import org.delta.persons.PersonGsonSerializationService;
 import org.delta.persons.PersonSerializationService;
 import org.delta.print.DetailPrinter;

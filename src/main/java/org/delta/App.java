@@ -1,9 +1,9 @@
 package org.delta;
 
 import com.google.inject.Inject;
-import org.delta.acounts.*;
-import org.delta.acounts.cards.BankCard;
-import org.delta.acounts.interesting.InterestingService;
+import org.delta.accounts.*;
+import org.delta.accounts.cards.BankCard;
+import org.delta.accounts.interesting.InterestingService;
 import org.delta.persons.*;
 
 import java.util.Map;
@@ -44,8 +44,8 @@ public class App {
             System.out.println(expire);
         }
 
-        if (accountThree instanceof Interesting) {
-            double interest = ((Interesting) accountThree).getInterest();
+        if (accountThree instanceof InterestingBankAccount) {
+            double interest = ((InterestingBankAccount) accountThree).getInterest();
             System.out.println(interest);
         }
 
@@ -62,10 +62,8 @@ public class App {
         System.out.println("ATM SERVICE TEST");
 
         // hack
-        BankCard bankCard = null;
-        for (Map.Entry<String, BankCard> entrySet : accountOne.getCards().entrySet()) {
-            bankCard = entrySet.getValue();
-        }
+        BankCard bankCard = new BankCard("1234", "2222", accountOne);
+
         // hack
         this.atmService.withdrawMoney(bankCard.getNumber(), bankCard.getPin(), 500);
 

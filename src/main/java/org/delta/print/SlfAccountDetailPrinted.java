@@ -1,10 +1,10 @@
 package org.delta.print;
 
 import com.google.inject.Singleton;
-import org.delta.acounts.cards.BankCard;
+import org.delta.accounts.cards.BankCard;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.delta.acounts.BankAccount;
+import org.delta.accounts.BankAccount;
 
 import java.util.Map;
 

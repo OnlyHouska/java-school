@@ -1,4 +1,4 @@
-package org.delta.acounts.interesting;
+package org.delta.accounts.interesting;
 
 import com.google.inject.Singleton;
 

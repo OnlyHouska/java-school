@@ -1,8 +1,8 @@
-package org.delta.acounts;
+package org.delta.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.acounts.exceptions.NoMoneyOnAccountException;
+import org.delta.accounts.exceptions.NoMoneyOnAccountException;
 import org.delta.print.DetailPrinter;
 
 @Singleton

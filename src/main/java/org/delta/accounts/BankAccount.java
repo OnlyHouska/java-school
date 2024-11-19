@@ -1,5 +1,6 @@
 package org.delta.accounts;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.delta.accounts.cards.BankCard;
 import org.delta.persons.Owner;
@@ -7,7 +8,6 @@ import org.delta.persons.Owner;
 import java.util.HashMap;
 import java.util.Map;
 
-@Singleton
 public class BankAccount {
     private final String accountNumber;
     private double balance;
@@ -15,7 +15,7 @@ public class BankAccount {
 
     private final Map<String, BankCard> cardsInMap;
 
-
+    private GlobalCardStorage globalCardStorage;
 
     public BankAccount(String accountNumber, double balance, Owner owner) {
         this.accountNumber = accountNumber;

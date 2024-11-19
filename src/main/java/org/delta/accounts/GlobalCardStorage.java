@@ -1,4 +1,4 @@
-package org.delta.acounts;
+package org.delta.accounts;
 
 import com.google.inject.Singleton;
 
@@ -11,6 +11,8 @@ import java.util.Map;
     private Map<String, BankAccount> bankCards = new HashMap<>();
 
     public BankAccount getBankAccount(String cardNumber) {
+        System.out.println("Getting bank account for card number: " + cardNumber);
+        System.out.println("Bank account: " + bankCards.get(cardNumber));
         return bankCards.get(cardNumber);
     }
 

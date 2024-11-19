@@ -28,8 +28,8 @@ public class BankCardFactoryTest {
         Owner ownerTest = this.ownerFactory.createOwner("Jan", "Kocanda", "777");
         assertEquals(ownerTest.getName(), "Jan");
         assertEquals(ownerTest.getSurname(), "Kocanda");
-        assertEquals(ownerTest.getId(), "777");
-        BankAccount testBankAccount = this.bankAccountFactory.createBankAccount(100, ownerTest);
+        assertEquals(ownerTest.getPersonId(), "777");
+        BankAccount testBankAccount = this.bankAccountFactory.createBankAccount(ownerTest, 100);
         assertEquals(testBankAccount.getBalance(), 100);
         BankCard bankCardTest = this.bankCardFactory.createBankCard(testBankAccount);
     }

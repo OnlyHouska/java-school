@@ -1,10 +1,11 @@
-package org.delta.acounts.interesting;
+package org.delta.accounts.interesting;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.acounts.BankAccount;
-import org.delta.acounts.GlobalBankAccountStorage;
-import org.delta.acounts.Interesting;
+import org.delta.accounts.BankAccount;
+import org.delta.accounts.GlobalBankAccountStorage;
+import org.delta.accounts.Interesting;
+import org.delta.accounts.InterestingBankAccount;
 
 @Singleton
 public class InterestingService {
@@ -23,11 +24,11 @@ public class InterestingService {
         }
 
         for (BankAccount account : globalBankAccountStorage.getBankAccounts()) {
-            if (!(account instanceof Interesting)) {
+            if (!(account instanceof InterestingBankAccount)) {
                 continue;
             }
 
-            Interesting interesting = (Interesting) account;
+//            InterestingBankAccount interesting = (InterestingBankAccount) account;
         }
 
         System.out.println("end interesting process");

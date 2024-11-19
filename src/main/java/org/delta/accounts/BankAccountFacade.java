@@ -1,9 +1,9 @@
-package org.delta.acounts;
+package org.delta.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.acounts.cards.BankCard;
-import org.delta.acounts.cards.BankCardFactory;
+import org.delta.accounts.cards.BankCard;
+import org.delta.accounts.cards.BankCardFactory;
 import org.delta.persons.Owner;
 
 @Singleton
@@ -27,8 +27,8 @@ public class BankAccountFacade {
 
         if (withCard) {
             BankCard card = this.bankCardFactory.createBankCard(account);
-            account.addCard(card);
-            this.globalCardStorage.addBankCard(card.getNumber(), account);
+            addCard(card.getNumber(), card.getBankAccount());
+            globalCardStorage.addBankCard(card.getNumber(), account);
         }
 
         return account;
@@ -46,5 +46,9 @@ public class BankAccountFacade {
         this.globalBankAccountStorage.add(account);
 
         return account;
+    }
+
+    public void addCard(String number, BankAccount bankAccount) {
+        globalCardStorage.addBankCard(number, bankAccount);
     }
 }
