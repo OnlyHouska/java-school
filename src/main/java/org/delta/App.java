@@ -6,6 +6,7 @@ import org.delta.accounts.cards.BankCard;
 import org.delta.accounts.interesting.InterestingService;
 import org.delta.persons.*;
 
+import java.util.List;
 import java.util.Map;
 
 public class App {
@@ -28,7 +29,30 @@ public class App {
     @Inject
     private InterestingService interestingService;
 
+    @Inject
+    private BankAccountSerializationService bankAccountSerializationService;
+
+    @Inject
+    private OwnerSerializationService ownerSerializationService;
+
+    @Inject
+    private GlobalBankAccountStorage globalBankAccountStorage;
+
+    @Inject
+    private GlobalOwnerStorage globalOwnerStorage;
+
+    @Inject
+    private LoadFileFromFileSystem loadFileFromFileSystem;
     private void testBank() throws Exception {
+//        List<BankAccount> bankAccounts = loadFileFromFileSystem.loadBankAccounts("bankAccounts.json");
+//        List <Owner> owners = loadFileFromFileSystem.loadOwners("owners.json");
+//        for (BankAccount account : bankAccounts) {
+//            globalBankAccountStorage.add(account);
+//        }
+//        for (Owner owner : owners) {
+//            globalOwnerStorage.add(owner);
+//        }
+
         // DAOs
         Owner owner = this.ownerFactory.createOwner("Jan", "Kocanda ", "123");
 
@@ -36,38 +60,41 @@ public class App {
         BankAccount accountTwo = this.bankAccountFacade.createStudentBankAccount(owner, 1500, "expirace");
         BankAccount accountThree = this.bankAccountFacade.createSavingBankAccount(owner, 1500);
 
-        System.out.println(this.personJsonSerializationService.serializeOwner(owner));
+//        System.out.println(this.personJsonSerializationService.serializeOwner(owner));
+//
+//        // test
+//        if (accountTwo instanceof StudentBankAccount) {
+//            String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
+//            System.out.println(expire);
+//        }
+//
+//        if (accountThree instanceof InterestingBankAccount) {
+//            double interest = ((InterestingBankAccount) accountThree).getInterest();
+//            System.out.println(interest);
+//        }
 
-        // test
-        if (accountTwo instanceof StudentBankAccount) {
-            String expire = ((StudentBankAccount) accountTwo).getStudentStudiesConfirmationExpire();
-            System.out.println(expire);
-        }
-
-        if (accountThree instanceof InterestingBankAccount) {
-            double interest = ((InterestingBankAccount) accountThree).getInterest();
-            System.out.println(interest);
-        }
-
-        System.out.println("Bank account balance: " + accountOne.getBalance());
-
-        this.moneyTransferService.addMoney(accountOne, 100);
-        this.moneyTransferService.addMoney(accountOne, 10);
-        this.moneyTransferService.addMoney(accountOne, 600);
-        this.moneyTransferService.subMoney(accountOne, 150);
-
-        this.moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
-
-        System.out.println();
-        System.out.println("ATM SERVICE TEST");
-
-        // hack
-        BankCard bankCard = new BankCard("1234", "2222", accountOne);
-
-        // hack
-        this.atmService.withdrawMoney(bankCard.getNumber(), bankCard.getPin(), 500);
-
-        this.interestingService.run();
+        bankAccountSerializationService.runSerialization();
+        ownerSerializationService.runSerialization();
+//
+//        System.out.println("Bank account balance: " + accountOne.getBalance());
+//
+//        this.moneyTransferService.addMoney(accountOne, 100);
+//        this.moneyTransferService.addMoney(accountOne, 10);
+//        this.moneyTransferService.addMoney(accountOne, 600);
+//        this.moneyTransferService.subMoney(accountOne, 150);
+//
+//        this.moneyTransferService.transferMoneyBetweenAccounts(accountOne, accountTwo, 100);
+//
+//        System.out.println();
+//        System.out.println("ATM SERVICE TEST");
+//
+//        // hack
+//        BankCard bankCard = new BankCard("1234", "2222", accountOne);
+//
+//        // hack
+//        this.atmService.withdrawMoney(bankCard.getNumber(), bankCard.getPin(), 500);
+//
+//        this.interestingService.run();
     }
 
     private void testNum() {

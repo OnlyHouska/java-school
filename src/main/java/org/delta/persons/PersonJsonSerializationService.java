@@ -15,7 +15,7 @@ public class PersonJsonSerializationService implements PersonSerializationServic
         builder.append("\"" + owner.getSurname() + "\", ");
 
         builder.append("\"personId\": ");
-        builder.append("\"" + owner.getPersonId() + "\" ");
+        builder.append("\"" + owner.getS256b_personId() + "\" ");
 
         builder.append("}");
 

@@ -8,12 +8,13 @@ public class Owner{
 
     private final String surname;
 
-    private final String personId;
+    @SerializedName("person_id")
+    private final String s256b_personId;
 
     public Owner(String name, String surname, String personId) {
         this.name = name;
         this.surname = surname;
-        this.personId = personId;
+        this.s256b_personId = personId;
     }
 
     public String getName() {
@@ -24,7 +25,7 @@ public class Owner{
         return surname;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getS256b_personId() {
+        return s256b_personId;
     }
 }
