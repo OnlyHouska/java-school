@@ -12,16 +12,17 @@ public class BankAccountSerializationService {
     @Inject
     SaveFileToFileSystemService saveFileToFileSystemService;
 
+    @Inject
+    IO io;
+
     public void runSerialization() {
+        String fileName = "bankAccounts.json";
         Gson gson = new Gson();
 
-        Object finalJson = new Object();
-        for (BankAccount bankAccount : globalBankAccountStorage.getBankAccounts()) {
-            finalJson += gson.toJson(bankAccount);
-        }
+        String finalJson = gson.toJson(globalBankAccountStorage.getBankAccounts());
+        io.write(fileName, finalJson);
 
-        System.out.println(finalJson);
 
-        saveFileToFileSystemService.saveFile("bankAccounts.json", finalJson);
+//        saveFileToFileSystemService.saveFile("bankAccounts.json", finalJson);
     }
 }

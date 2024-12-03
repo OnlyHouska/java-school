@@ -42,7 +42,8 @@ public class App {
     private GlobalOwnerStorage globalOwnerStorage;
 
     @Inject
-    private LoadFileFromFileSystem loadFileFromFileSystem;
+    private OwnerDeserializationService ownerDeserializationService;
+
     private void testBank() throws Exception {
 //        List<BankAccount> bankAccounts = loadFileFromFileSystem.loadBankAccounts("bankAccounts.json");
 //        List <Owner> owners = loadFileFromFileSystem.loadOwners("owners.json");
@@ -52,6 +53,9 @@ public class App {
 //        for (Owner owner : owners) {
 //            globalOwnerStorage.add(owner);
 //        }
+
+
+        ownerDeserializationService.run();
 
         // DAOs
         Owner owner = this.ownerFactory.createOwner("Jan", "Kocanda ", "123");

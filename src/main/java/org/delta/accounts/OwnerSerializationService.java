@@ -3,7 +3,6 @@ package org.delta.accounts;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.delta.persons.Owner;
 
 @Singleton
 public class OwnerSerializationService {
@@ -13,15 +12,16 @@ public class OwnerSerializationService {
     @Inject
     SaveFileToFileSystemService saveFileToFileSystemService;
 
+    @Inject
+    IO io;
+
     public void runSerialization() {
+        String fileName = "owners.json";
         Gson gson = new Gson();
 
-        Object finalJson = new Object();
+        String finalJson = gson.toJson(globalOwnerStorage.getOwners());
+        io.write(fileName, finalJson);
 
-        for (Owner owner : globalOwnerStorage.getOwners()) {
-            finalJson += gson.toJson(owner, Owner.class);
-        }
-
-        saveFileToFileSystemService.saveFile("owners.json", finalJson);
+//        saveFileToFileSystemService.saveFile("owners.json", finalJson);
     }
 }
